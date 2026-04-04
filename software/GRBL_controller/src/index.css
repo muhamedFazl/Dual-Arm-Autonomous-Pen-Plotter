@@ -1,0 +1,527 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #121212;
+  --bg-tertiary: #1a1a1a;
+  --bg-panel: #141414;
+  --bg-panel-hover: #1f1f1f;
+  
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  
+  --accent-primary: #ffffff;
+  --accent-secondary: #e5e7eb;
+  --accent-glow: rgba(255, 255, 255, 0.1);
+  
+  --status-idle: #6b7280;
+  --status-run: #ffffff;
+  --status-hold: #d1d5db;
+  --status-alarm: #ef4444;
+  
+  --border-color: transparent;
+  --shadow-sm: none;
+  --shadow-lg: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+  --glow-border: none;
+  --header-height: 50px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-full: 0px;
+  --font-sans: system-ui, sans-serif;
+  --font-mono: monospace;
+  --font-display: sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Glass Panel */
+.glass-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+}
+
+.glass-panel:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* App Grid Layout */
+.app-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr 350px;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  padding: 12px;
+  height: 100%;
+  overflow: hidden;
+  grid-template-areas:
+    "sidebar visualizer console"
+    "sidebar editor console";
+}
+
+/* Grid Areas */
+.area-sidebar {
+  grid-area: sidebar;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.area-visualizer {
+  grid-area: visualizer;
+  position: relative;
+  overflow: hidden;
+}
+
+.area-editor {
+  grid-area: editor;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.area-console {
+  grid-area: console;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  grid-row: 1 /span 2;
+}
+
+/* LCD Text Style */
+.font-lcd {
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 2px currentColor;
+}
+
+/* CRT/Glow utilities */
+.text-glow {
+}
+
+.border-glow {
+}
+
+/* Button Resets & Styles */
+@layer components {
+  .btn {
+    appearance: none;
+    background: var(--bg-tertiary);
+    border: none;
+    color: var(--text-secondary);
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    user-select: none;
+    padding: 10px 16px; /* more spacious */
+  }
+
+  .btn-icon {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  /* Play / Stop icon button states */
+  .btn-play {
+    color: rgb(35, 160, 237);
+    background-color: rgba(35, 160, 237, 0.12);
+  }
+  .btn-play:hover {
+    background-color: rgba(35, 160, 237, 0.22);
+    color: rgb(80, 190, 255);
+  }
+
+  .btn-stop {
+    color: #f87171;
+    background-color: rgba(248, 113, 113, 0.12);
+  }
+  .btn-stop:hover {
+    background-color: rgba(248, 113, 113, 0.22);
+    color: #fca5a5;
+  }
+
+  /* Pause / Resume icon button states */
+  .btn-pause {
+    color: #facc15;
+    background-color: rgba(250, 204, 21, 0.12);
+  }
+  .btn-pause:hover {
+    background-color: rgba(250, 204, 21, 0.22);
+    color: #fde047;
+  }
+
+  .btn-resume {
+    color: #4ade80;
+    background-color: rgba(74, 222, 128, 0.12);
+  }
+  .btn-resume:hover {
+    background-color: rgba(74, 222, 128, 0.22);
+    color: #86efac;
+  }
+
+  /* Disabled icon button state */
+  .btn-disabled {
+    color: var(--text-muted);
+    opacity: 0.3;
+    cursor: not-allowed;
+    background-color: transparent;
+  }
+
+  .btn-primary {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    border: none;
+    font-weight: 600;
+    padding: 12px 24px;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.8;
+  }
+
+  .btn-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--status-alarm);
+    border: none;
+  }
+
+  .btn-danger:hover {
+    background: rgba(239, 68, 68, 0.2);
+  }
+
+  .btn-load {
+    padding: 12px 32px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    gap: 12px;
+    box-shadow: var(--shadow-lg);
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: rgb(35, 160, 237);
+    color: #ffffff;
+    transition: all 0.2s ease;
+  }
+
+  .btn-load:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    opacity: 0.9;
+  }
+
+  .btn-load.is-loaded {
+    background-color: #80EF80;
+    color: #111827;
+  }
+
+  .btn-connect {
+    padding: 12px 32px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    gap: 12px;
+    box-shadow: var(--shadow-lg);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-connect-idle {
+    background-color: rgb(35, 160, 237);
+    color: #ffffff;
+  }
+  .btn-connect-idle:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    opacity: 0.9;
+  }
+
+  .btn-connect-connecting {
+    background-color: #eab308;
+    color: #ffffff;
+    cursor: wait;
+  }
+
+  .btn-connect-connected {
+    background-color: #80EF80;
+    color: #111827;
+  }
+  .btn-connect-connected:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    opacity: 0.9;
+  }
+}
+
+/* Utility */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+/* ── GCode History Modal ──────────────────────────────────────────────────── */
+
+.grbl-history-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.97);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  animation: grbl-fade-in 0.18s ease;
+}
+
+@keyframes grbl-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.grbl-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: var(--bg-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 110;
+  flex-shrink: 0;
+}
+
+.grbl-history-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+}
+
+.grbl-history-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.grbl-history-close:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #f87171;
+}
+
+.grbl-history-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px;
+}
+
+.grbl-history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 300px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.grbl-history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.grbl-history-card {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.grbl-history-card:hover {
+  border-color: rgba(255,255,255,0.18);
+  transform: translateY(-2px);
+}
+
+.grbl-history-card-img {
+  height: 180px;
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+
+.grbl-history-card-footer {
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grbl-history-card-time {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-align: center;
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+}
+
+.grbl-history-load-btn {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: all 0.2s ease;
+  letter-spacing: 0.03em;
+  background-color: rgb(35, 160, 237);
+  color: #ffffff;
+}
+
+.grbl-history-load-btn:hover {
+  opacity: 0.88;
+  transform: scale(1.02);
+}
+
+.grbl-history-load-btn.is-loaded {
+  background-color: #80EF80;
+  color: #111827;
+  cursor: default;
+  transform: scale(1);
+}
+
+/* History badge button in header */
+.btn-history {
+  position: relative;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  gap: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-history:hover {
+  background-color: rgba(35, 160, 237, 0.15);
+  color: rgb(35, 160, 237);
+}
+
+.btn-history-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: rgb(35, 160, 237);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Loading spinner for history modal */
+.grbl-history-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255,255,255,0.08);
+  border-top-color: rgb(35, 160, 237);
+  border-radius: 50%;
+  animation: grbl-spin 0.8s linear infinite;
+}
+
+@keyframes grbl-spin {
+  to { transform: rotate(360deg); }
+}
