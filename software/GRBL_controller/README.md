@@ -2,8 +2,6 @@
 
 GRBLCONTROL is a high-performance, aesthetically pleasing web interface designed for controlling GRBL-based CNC machines. It provides a robust alternative to traditional desktop-based G-code senders, leveraging modern web technologies to offer a seamless, responsive experience directly in the browser.
 
-![GRBL Controller Interface](file:///C:/Users/hp/.gemini/antigravity/brain/19fd085d-7eda-412d-a6b6-b03b133e0bcd/grbl_verify_5174_1775210525748.png)
-
 ## 🚀 Key Features
 
 ### 🔌 Direct Hardware Connection
