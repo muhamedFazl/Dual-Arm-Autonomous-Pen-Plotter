@@ -1,16 +1,27 @@
-# React + Vite
+# 🎨 Caricature to G-code
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An AI-powered web application designed to transform standard photographs into artistic, line-based caricatures and convert them into machine-ready **G-code** for CNC plotters and drawing robots.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **AI Transformation**: Leverages Google Generative AI (Gemini) to convert portraits into stylized caricatures.
+*   **Advanced Image Processing**: 
+    *   **Binarization**: Intelligent thresholding for high-contrast line extraction.
+    *   **Zhang-Suen Thinning**: Implements a skeletonization algorithm to reduce lines to single-pixel thickness, ensuring precise machine paths.
+*   **G-code & SVG Generation**: 
+    *   Automatically generates GRBL-compatible G-code for plotting.
+    *   Exports clean SVG paths for vector-based design work.
+*   **Real-time Preview**: A multi-stage preview system showing the original, AI-output, and the final thinned skeleton.
+*   **Persistent History**: A local save system (built on `localStorage`) that allows users to store, retrieve, and download past creations.
+*   **Modern Workspace**: A premium, responsive dark-mode interface built for speed and visual clarity.
 
-## React Compiler
+## 🛠️ Technology Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+*   **Core**: [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+*   **Styling**: [Tailwind CSS](https://tailwindcss.com/) & [Framer Motion](https://www.framer.com/motion/)
+*   **AI Engine**: [Google Generative AI (Gemini)](https://ai.google.dev/)
+*   **Image Tracing**: `imagetracerjs`
+*   **Icons**: [Lucide React](https://lucide.dev/)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Run locally
+* ```npm run dev```
