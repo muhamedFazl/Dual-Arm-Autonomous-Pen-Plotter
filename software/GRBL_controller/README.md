@@ -34,37 +34,6 @@ GRBLCONTROL is a high-performance, aesthetically pleasing web interface designed
 - **Hardware**: Web Serial API
 - **Animations**: Framer Motion
 
-## 🏁 Getting Started
-
-### Prerequisites
-- Node.js (v18+)
-- A Web Serial compatible browser (Chrome, Edge, or Opera)
-
-### Installation
-1.  **Clone the repository**:
-    ```bash
-    git clone <repository-url>
-    cd GRBL_controller
-    ```
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
-3.  **Run the development server**:
-    ```bash
-    npm run dev
-    ```
-4.  **Access the app**:
-    Open [http://localhost:5174](http://localhost:5174) in your browser. (The port is configured to 5174 by default in `vite.config.js`).
-
-## 📖 Usage Guide
-1.  **Connect**: Ensure your GRBL machine is plugged in, then click the **Connect** button. Select the appropriate COM port.
-2.  **Load G-Code**:
-    - Use the **Load G-Code** button to upload a local file.
-    - Click **History** to pull designs from the Caricature app bridge.
-3.  **Stream**: Once loaded, use the **Play** button to begin execution. You can use **Pause** at any time or manually select a starting line in the editor and click the **FastForward** (Start from selected) icon.
-4.  **Monitor**: Keep track of machine coordinates and progress in the left-hand status panel.
-
 ---
 Built with ❤️ for the Envisage SwiftCanvas project.
 
